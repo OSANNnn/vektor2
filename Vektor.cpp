@@ -2,8 +2,14 @@
 
 
 template<typename T>
-Vektor<T>::Vektor()
+Vektor<T>::Vektor() :
+	IsEmpty(true),
+	m_Capacity(1),
+	m_Lenght(0),
+	m_sizeOfType(0),
+	m_FirstEmpty(0)
 {
+	m_Data = new T[];
 }
 
 template<typename T>
