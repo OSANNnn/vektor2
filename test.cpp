@@ -29,6 +29,13 @@ int main()
 	points.Push_back(firstpoint);
 	points.Push_back(firstpoint);
 	points.Push_back(firstpoint);
+	std::cout << points.Size() << std::endl;
+	points.Pop_back();
+	std::cout << points.Size() << std::endl;
+
+
+
+	points.Clear();
 
 	if (points.Is_Empty())
 		std::cout << "Empty" << std::endl;

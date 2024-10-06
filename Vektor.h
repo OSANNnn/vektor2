@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 template <typename T>
 class Vektor
 {
@@ -37,41 +35,42 @@ private:
 	T* m_Data;
 	bool m_IsEmpty;
 	size_t m_Capacity;
-	size_t m_Lenght;
+	size_t m_Size;
 	size_t m_sizeOfType;
 	size_t m_FirstEmpty;
 
 private:
 	bool isInRange(size_t position);
-	T* Allocate(size_t size);
+	void Allocate(size_t newCapacity);
 };
 
 template<typename T>
 Vektor<T>::Vektor() :
 	m_IsEmpty(true),
 	m_Capacity(2),
-	m_Lenght(0),
+	m_Size(0),
 	m_sizeOfType(sizeof(T)),
 	m_FirstEmpty(0)
 {
-	m_Data = Allocate(m_Capacity);
+	Allocate(m_Capacity);
 }
 
 template<typename T>
 inline Vektor<T>::Vektor(T element) :
 	m_IsEmpty(false),
 	m_Capacity(2),
-	m_Lenght(1),
+	m_Size(1),
 	m_sizeOfType(sizeof(T)),
 	m_FirstEmpty(1)
 {
-	m_Data = Allocate(m_Capacity);
+	Allocate(m_Capacity);
 	m_Data[0] = element;
 }
 
 template<typename T>
 inline Vektor<T>::~Vektor()
 {
+	Clear();
 	delete[] m_Data;
 }
 
@@ -81,24 +80,28 @@ inline void Vektor<T>::Push_back(T& element)
 	if (m_IsEmpty) 
 		m_IsEmpty = false;
 
-	if (m_Capacity - m_Lenght == 0)
+	if (m_Size >= m_Capacity)
 	{
-		float newCapacity = m_Capacity + (float)m_Capacity / 2;
-		m_Capacity = (size_t)newCapacity;
-		T* newData = Allocate(m_Capacity);
-
-		memcpy(newData, m_Data, m_Lenght * m_sizeOfType);
-		delete[] m_Data;
-		m_Data = newData;
+		size_t newCapacity = m_Capacity + m_Capacity / 2;
+		Allocate(newCapacity);		
 	}
 
 	m_Data[m_FirstEmpty++] = element;
-	m_Lenght++;
+	m_Size++;
 }
 
 template<typename T>
 inline void Vektor<T>::Pop_back()
 {
+	if (m_IsEmpty)
+		return;
+
+	m_Data[m_Size - 1].~T();
+	m_Size--;
+	m_FirstEmpty--;
+
+	if (m_FirstEmpty == 0)
+		m_IsEmpty = true;
 }
 
 template<typename T>
@@ -124,6 +127,13 @@ inline void Vektor<T>::Pop_Front(T& Element)
 template<typename T>
 inline void Vektor<T>::Clear()
 {
+	for (size_t i = 0; i < m_Size; i++)
+		m_Data[i].~T();
+	m_Size = 0;
+	m_FirstEmpty = 0;
+	m_IsEmpty = true;
+
+	Allocate(2);
 }
 
 template<typename T>
@@ -135,19 +145,19 @@ inline bool Vektor<T>::Is_Empty() const
 template<typename T>
 inline size_t Vektor<T>::Size() const
 {
-	return size_t();
+	return m_Size;
 }
 
 template<typename T>
 inline size_t Vektor<T>::Capacity() const
 {
-	return size_t();
+	return m_Capacity;
 }
 
 template<typename T>
 inline size_t Vektor<T>::SizeOfType() const
 {
-	return size_t();
+	return m_sizeOfType;
 }
 
 template<typename T>
@@ -210,7 +220,19 @@ inline bool Vektor<T>::isInRange(size_t position)
 }
 
 template<typename T>
-inline T* Vektor<T>::Allocate(size_t size)
+inline void Vektor<T>::Allocate(size_t newCapacity)
 {
-	return new T[size];
+	T* newData = new T[newCapacity];
+
+	if (newCapacity < m_Size)
+		m_Size = newCapacity;
+
+	for (size_t i = 0; i < m_Size; i++)
+	{
+		newData[i] = m_Data[i];
+	}
+
+	delete[] m_Data;
+	m_Data = newData;
+	m_Capacity = newCapacity;
 }
