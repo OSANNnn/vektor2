@@ -40,6 +40,7 @@ private:
 private:
 	bool isInRange(size_t position);
 	void Allocate(size_t newCapacity);
+	void AllocWithBlank(size_t newCapacity, size_t blankIndex);
 };
 
 template<typename T>
@@ -213,6 +214,28 @@ inline void Vektor<T>::Allocate(size_t newCapacity)
 	for (size_t i = 0; i < m_Size; i++)
 	{
 		newData[i] = m_Data[i];
+	}
+
+	delete[] m_Data;
+	m_Data = newData;
+	m_Capacity = newCapacity;
+}
+
+template<typename T>
+inline void Vektor<T>::AllocWithBlank(size_t newCapacity, size_t blankIndex)
+{
+	T* newData = new T[newCapacity];
+
+	if (newCapacity < m_Size)
+		m_Size = newCapacity;
+
+	size_t offset = 0;
+	for (size_t i = 0; i < m_Size; i++)
+	{
+		if (i == blankIndex)
+			offset++;
+
+		newData[i + offset] = m_Data[i];
 	}
 
 	delete[] m_Data;
