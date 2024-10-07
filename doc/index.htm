@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vektor class overview">
+    <title>Vektor Class</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1, h2 {
+            color: #004481;
+        }
+        .content {
+            width: 80%;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f8f8;
+            font-weight: bold;
+        }
+        .code {
+            background-color: #f8f8f8;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Vektor Class</h1>
+        <p><strong>Header:</strong> <code>Vektor.h</code></p>
+
+        <h2>Class Overview</h2>
+        <p>The <strong>Vektor</strong> class template represents a dynamic array of elements of type <code>T</code>. It dynamically manages memory and provides methods to add, remove, access elements, and query vector properties.</p>
+
+        <h2>Member Functions</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Function</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="constructor_default.html">Vektor()</a></td>
+                    <td>Default constructor that initializes an empty vector.</td>
+                </tr>
+                <tr>
+                    <td><a href="constructor_element.html">Vektor(T element)</a></td>
+                    <td>Constructor that initializes the vector with one element.</td>
+                </tr>
+                <tr>
+                    <td><a href="destructor.html">~Vektor()</a></td>
+                    <td>Destructor that deallocates the memory used by the vector.</td>
+                </tr>
+                <tr>
+                    <td><a href="push_back.html">Push_back(const T&amp; element)</a></td>
+                    <td>Adds an element to the end of the vector.</td>
+                </tr>
+                <tr>
+                    <td><a href="pop_back.html">Pop_back()</a></td>
+                    <td>Removes the last element from the vector.</td>
+                </tr>
+                <tr>
+                    <td><a href="size.html">Size() const</a></td>
+                    <td>Returns the number of elements in the vector.</td>
+                </tr>
+                <tr>
+                    <td><a href="capacity.html">Capacity() const</a></td>
+                    <td>Returns the capacity of the vector.</td>
+                </tr>
+                <tr>
+                    <td><a href="clear.html">Clear()</a></td>
+                    <td>Removes all elements from the vector.</td>
+                </tr>
+                <tr>
+                    <td><a href="is_empty.html">Is_Empty() const</a></td>
+                    <td>Checks if the vector is empty.</td>
+                </tr>
+                <tr>
+                    <td><a href="at.html">At(size_t position)</a></td>
+                    <td>Returns a reference to the element at the specified position.</td>
+                </tr>
+                <tr>
+                    <td><a href="operator_index.html">operator[](size_t position)</a></td>
+                    <td>Accesses the element at the specified position using the subscript operator.</td>
+                </tr>
+                <tr>
+                    <td><a href="first.html">First()</a></td>
+                    <td>Returns a reference to the first element in the vector.</td>
+                </tr>
+                <tr>
+                    <td><a href="last.html">Last()</a></td>
+                    <td>Returns a reference to the last element in the vector.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
