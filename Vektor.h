@@ -1,5 +1,7 @@
 #pragma once
 
+#include <exception>
+
 template <typename T>
 class Vektor
 {
@@ -8,7 +10,7 @@ public:
 	Vektor(T element);
 	~Vektor();
 
-	void Push_back(T& element);
+	void Push_back(const T& element);
 	void Pop_back();
 	void Insert(size_t position);
 	void Erase(size_t position);
@@ -23,13 +25,9 @@ public:
 	void Reserve(size_t size);
 
 	T& At(size_t position);
-	const T& At(size_t position) const;
 	T& operator[](size_t position);
-	const T& operator[](size_t position) const;
 	T& First();
-	const T& First() const;
 	T& Last();
-	const T& Last() const;
 
 private:
 	T* m_Data;
@@ -70,12 +68,11 @@ inline Vektor<T>::Vektor(T element) :
 template<typename T>
 inline Vektor<T>::~Vektor()
 {
-	Clear();
 	delete[] m_Data;
 }
 
 template<typename T>
-inline void Vektor<T>::Push_back(T& element)
+inline void Vektor<T>::Push_back(const T& element)
 {
 	if (m_IsEmpty) 
 		m_IsEmpty = false;
@@ -96,8 +93,8 @@ inline void Vektor<T>::Pop_back()
 	if (m_IsEmpty)
 		return;
 
-	m_Data[m_Size - 1].~T();
 	m_Size--;
+	m_Data[m_Size].~T();
 	m_FirstEmpty--;
 
 	if (m_FirstEmpty == 0)
@@ -163,60 +160,46 @@ inline size_t Vektor<T>::SizeOfType() const
 template<typename T>
 inline void Vektor<T>::Reserve(size_t size)
 {
+	Allocate(size);
 }
 
 template<typename T>
 inline T& Vektor<T>::At(size_t position)
 {
-	// TODO: insert return statement here
-}
+	if (!isInRange(position))
+		exit(-1);
 
-template<typename T>
-inline const T& Vektor<T>::At(size_t position) const
-{
-	// TODO: insert return statement here
+	return m_Data[position];
 }
 
 template<typename T>
 inline T& Vektor<T>::operator[](size_t position)
 {
-	// TODO: insert return statement here
-}
-
-template<typename T>
-inline const T& Vektor<T>::operator[](size_t position) const
-{
-	// TODO: insert return statement here
+	return m_Data[position];
 }
 
 template<typename T>
 inline T& Vektor<T>::First()
 {
-	// TODO: insert return statement here
-}
+	if (m_IsEmpty)
+		exit(-1);
 
-template<typename T>
-inline const T& Vektor<T>::First() const
-{
-	// TODO: insert return statement here
+	return m_Data[0];
 }
 
 template<typename T>
 inline T& Vektor<T>::Last()
 {
-	// TODO: insert return statement here
-}
+	if (m_IsEmpty)
+		exit(-1);
 
-template<typename T>
-inline const T& Vektor<T>::Last() const
-{
-	// TODO: insert return statement here
+	return m_Data[m_Size - 1];
 }
 
 template<typename T>
 inline bool Vektor<T>::isInRange(size_t position)
 {
-	return false;
+	return position < m_Size;
 }
 
 template<typename T>
