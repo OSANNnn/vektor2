@@ -10,6 +10,7 @@ public:
 	Vektor(T element);
 	~Vektor();
 
+	//data managment
 	void Push_back(const T& element);
 	void Pop_back();
 	void Insert(size_t position);
@@ -18,12 +19,16 @@ public:
 	void Pop_Front(T& Element);
 	void Clear();
 
+	//vector queries
 	bool Is_Empty() const;
 	size_t Size() const;
 	size_t Capacity() const;
 	size_t SizeOfType() const;
+
+	//preventive mem reservation
 	void Reserve(size_t size);
 
+	//data access
 	T& At(size_t position);
 	T& operator[](size_t position);
 	T& First();
@@ -44,7 +49,7 @@ private:
 };
 
 template<typename T>
-Vektor<T>::Vektor() :
+inline Vektor<T>::Vektor() :
 	m_IsEmpty(true),
 	m_Capacity(2),
 	m_Size(0),
@@ -115,6 +120,22 @@ inline void Vektor<T>::Erase(size_t position)
 template<typename T>
 inline void Vektor<T>::Push_front(T& element)
 {
+	if (m_Size >= m_Capacity)
+	{
+		size_t newCapacity = m_Capacity + m_Capacity / 2;
+		AllocWithBlank(newCapacity, 0);
+	}
+	else
+	{
+		for (size_t i = m_Size; i > 0; i--)
+		{
+			// [ X | X | X | X | X ]
+			m_Data[i] = data[i - 1];
+		}
+	}
+
+	m_Data[0] = element;
+	m_Size++;
 }
 
 template<typename T>
