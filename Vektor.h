@@ -130,7 +130,7 @@ inline void Vektor<T>::Push_front(T& element)
 		for (size_t i = m_Size; i > 0; i--)
 		{
 			// [ X | X | X | X | X ]
-			m_Data[i] = data[i - 1];
+			m_Data[i] = m_Data[i - 1];
 		}
 	}
 

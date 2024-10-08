@@ -17,6 +17,7 @@ int main()
 	points.Push_back(firstpoint);
 	points.Push_back(firstpoint);
 	points.Push_back(firstpoint);
+	points.Push_front(firstpoint);
 	points.At(4);
 	
 	std::cout << "ok" << std::endl;
